@@ -1,34 +1,26 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
+
+    private By emailInput = By.xpath("//input[@data-qa='login-email']");
+    private By passwordInput = By.xpath("//input[@data-qa='login-password']");
+    private By loginButton = By.xpath("//button[@data-qa='login-button']");
+    private By signupLoginLink = By.xpath("//a[contains(text(),'Signup / Login')]");
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = "//input[@data-qa='login-email']")
-    private WebElement emailInput;
-
-    @FindBy(xpath = "//input[@data-qa='login-password']")
-    private WebElement passwordInput;
-
-    @FindBy(xpath = "//button[@data-qa='login-button']")
-    private WebElement loginButton;
-
-    @FindBy(xpath = "//p[contains(text(),'Your email or password is incorrect!')]")
-    private WebElement errorMessage;
-
-    public void login(String email, String password) {
-        emailInput.sendKeys(email);
-        passwordInput.sendKeys(password);
-        loginButton.click();
+    public void goToLoginPage() {
+        click(signupLoginLink);
     }
 
-    public boolean isErrorMessageDisplayed() {
-        return errorMessage.isDisplayed();
+    public void login(String email, String password) {
+        type(emailInput, email);
+        type(passwordInput, password);
+        click(loginButton);
     }
 }

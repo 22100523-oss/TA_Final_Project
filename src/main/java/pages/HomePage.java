@@ -1,26 +1,21 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage {
+
+    private By logoutLink = By.xpath("//a[@href='/logout']");
 
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = "//a[contains(text(),'Logout')]")
-    private WebElement logoutButton;
-
-    @FindBy(xpath = "//a[contains(text(),'Cart')]")
-    private WebElement cartLink;
-
-    public void clickLogout() {
-        logoutButton.click();
+    public void logout() {
+        click(logoutLink);
     }
 
-    public void openCart() {
-        cartLink.click();
+    public void openHomePage() {
+        openUrl("https://automationexercise.com/");
     }
 }

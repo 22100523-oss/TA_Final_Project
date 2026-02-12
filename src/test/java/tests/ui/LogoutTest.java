@@ -1,18 +1,35 @@
 package tests.ui;
 
-import base.BaseTest;
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
 import pages.HomePage;
 import pages.LoginPage;
 
-public class LogoutTest extends BaseTest {
+public class LogoutTest {
+
+    private WebDriver driver;
+    private LoginPage loginPage;
+    private HomePage homePage;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        loginPage = new LoginPage(driver);
+        homePage = new HomePage(driver);
+        driver.get("https://automationexercise.com/");
+    }
 
     @Test
     public void logoutTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("test@example.com", "password123");
+        loginPage.goToLoginPage();
+        loginPage.login("giotchey@gmail.com", "password123");
+        homePage.logout();
+    }
 
-        HomePage homePage = new HomePage(driver);
-        homePage.clickLogout();
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 }

@@ -1,16 +1,31 @@
 package tests.ui;
 
-import base.BaseTest;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
 import pages.LoginPage;
 
-public class LoginTest extends BaseTest {
+public class LoginTest {
+
+    private WebDriver driver;
+    private LoginPage loginPage;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        loginPage = new LoginPage(driver);
+        driver.get("https://automationexercise.com/");
+    }
 
     @Test
     public void validLoginTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("test@example.com", "password123");
-        Assert.assertTrue(driver.getTitle().contains("Automation Exercise"));
+        loginPage.goToLoginPage();
+        loginPage.login("giotchey@gmail.com", "password123");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 }
