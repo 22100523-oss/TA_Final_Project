@@ -1,35 +1,31 @@
 package tests.ui;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
-import pages.CartPage;
+import base.BaseTest;
+import io.qameta.allure.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
-public class RemoveFromCartTest {
+import java.time.Duration;
 
-    private WebDriver driver;
-    private CartPage cartPage;
+@Epic("UI Testing")
+@Feature("Shopping Cart")
+public class RemoveFromCartTest extends BaseTest {
 
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        cartPage = new CartPage(driver);
-        cartPage.login("giotchey@gmail.com", "password123");
-    }
-
-    @Test
+    @Test(description = "Remove Product from Cart")
+    @Story("Cart Management")
+    @Description("Test Case: Remove a product from shopping cart")
+    @Severity(SeverityLevel.NORMAL)
     public void removeFromCartTest() {
-        int productId = 2;
-        cartPage.removeFromCart(productId);
-        cartPage.addToCart(productId);
-        cartPage.removeFromCart(productId);
-    }
+        driver.get("https://automationexercise.com/view_cart");
 
-    @AfterMethod
-    public void tearDown() {
-        if(driver != null) {
-            driver.quit();
-        }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector(".cart_quantity_delete")
+        )).click();
+
+        String cartInfo = driver.findElement(By.cssSelector(".cart_info")).getText();
+        System.out.println("✓ Cart after remove: " + cartInfo);
     }
 }

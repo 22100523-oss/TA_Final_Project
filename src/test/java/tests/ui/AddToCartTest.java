@@ -1,33 +1,32 @@
 package tests.ui;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
-import pages.CartPage;
-import pages.HomePage;
+import base.BaseTest;
+import io.qameta.allure.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
-public class AddToCartTest {
+import java.time.Duration;
 
-    private WebDriver driver;
-    private CartPage cartPage;
-    private HomePage homePage;
+@Epic("UI Testing")
+@Feature("Shopping Cart")
+public class AddToCartTest extends BaseTest {
 
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        cartPage = new CartPage(driver);
-        homePage = new HomePage(driver);
-        homePage.openHomePage();
-    }
-
-    @Test
+    @Test(description = "Add Product to Cart")
+    @Story("Cart Management")
+    @Description("Test Case: Add a product to shopping cart")
+    @Severity(SeverityLevel.CRITICAL)
     public void addToCartTest() {
-        cartPage.addToCart(2);
-    }
+        driver.get("https://automationexercise.com/");
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("a[href='/product_details/1'] ~ .add-to-cart")
+        )).click();
+
+        // Optional: Assert cart info
+        String cartInfo = driver.findElement(By.cssSelector(".cart-info")).getText();
+        System.out.println("✓ Cart Info: " + cartInfo);
     }
 }

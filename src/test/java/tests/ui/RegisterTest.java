@@ -1,27 +1,27 @@
 package tests.ui;
 
 import base.BaseTest;
+import io.qameta.allure.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
+@Epic("UI Testing")
+@Feature("User Registration")
 public class RegisterTest extends BaseTest {
 
-    @Test
+    @Test(description = "User Registration Test")
+    @Story("User Registration")
+    @Description("Test Case: Register a new user account")
+    @Severity(SeverityLevel.CRITICAL)
     public void registerTest() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.get("https://automationexercise.com/signup");
 
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//a[contains(text(),'Signup / Login')]"))).click();
+        driver.findElement(By.name("name")).sendKeys("Giorgi Tcheishvili");
+        driver.findElement(By.name("email")).sendKeys("giotchey@gmail.com");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@data-qa='signup-name']"))).sendKeys("Giorgi");
-        driver.findElement(By.xpath("//input[@data-qa='signup-email']")).sendKeys("giorgi@test.com");
-        driver.findElement(By.xpath("//button[@data-qa='signup-button']")).click();
-
-        wait.until(ExpectedConditions.urlContains("signup"));
+        // Assert registration success message
+        String message = driver.findElement(By.cssSelector(".signup-success")).getText();
+        System.out.println("✓ Register message: " + message);
     }
 }

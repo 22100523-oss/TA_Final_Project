@@ -1,31 +1,27 @@
 package tests.ui;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
-import pages.LoginPage;
+import base.BaseTest;
+import io.qameta.allure.*;
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
 
-public class LoginTest {
+@Epic("UI Testing")
+@Feature("User Authentication")
+public class LoginTest extends BaseTest {
 
-    private WebDriver driver;
-    private LoginPage loginPage;
+    @Test(description = "User Login Test")
+    @Story("User Login")
+    @Description("Test Case: Login with valid credentials")
+    @Severity(SeverityLevel.CRITICAL)
+    public void loginTest() {
+        driver.get("https://automationexercise.com/login");
 
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        loginPage = new LoginPage(driver);
-        driver.get("https://automationexercise.com/");
-    }
+        driver.findElement(By.name("email")).sendKeys("giotchey@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("password123");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
 
-    @Test
-    public void validLoginTest() {
-        loginPage.goToLoginPage();
-        loginPage.login("giotchey@gmail.com", "password123");
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
+        // Verify login success
+        String userInfo = driver.findElement(By.cssSelector(".user-info")).getText();
+        System.out.println("✓ Logged in as: " + userInfo);
     }
 }

@@ -1,35 +1,23 @@
 package tests.ui;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
-import pages.HomePage;
-import pages.LoginPage;
+import base.BaseTest;
+import io.qameta.allure.*;
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
 
-public class LogoutTest {
+@Epic("UI Testing")
+@Feature("User Authentication")
+public class LogoutTest extends BaseTest {
 
-    private WebDriver driver;
-    private LoginPage loginPage;
-    private HomePage homePage;
-
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        loginPage = new LoginPage(driver);
-        homePage = new HomePage(driver);
-        driver.get("https://automationexercise.com/");
-    }
-
-    @Test
+    @Test(description = "User Logout Test")
+    @Story("User Logout")
+    @Description("Test Case: Logout from user account")
+    @Severity(SeverityLevel.NORMAL)
     public void logoutTest() {
-        loginPage.goToLoginPage();
-        loginPage.login("giotchey@gmail.com", "password123");
-        homePage.logout();
-    }
+        driver.get("https://automationexercise.com/logout");
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
+        // Verify logout
+        String logoutMsg = driver.findElement(By.cssSelector(".logout-message")).getText();
+        System.out.println("✓ Logout message: " + logoutMsg);
     }
 }

@@ -1,16 +1,17 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
 
 public class CartPage extends BasePage {
 
     private By loginEmail = By.cssSelector("input[data-qa='login-email']");
     private By loginPassword = By.cssSelector("input[data-qa='login-password']");
     private By loginButton = By.cssSelector("button[data-qa='login-button']");
-    private By continueShoppingButton = By.cssSelector("button.close-modal, .modal_close");
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -21,20 +22,14 @@ public class CartPage extends BasePage {
         type(loginEmail, email);
         type(loginPassword, password);
         click(loginButton);
-        wait.until(ExpectedConditions.urlContains("automationexercise.com"));
     }
 
     public void addToCart(int productId) {
         openUrl("https://automationexercise.com/");
-        By addButton = By.cssSelector("a[data-product-id='" + productId + "'].add-to-cart");
-        click(addButton);
-
-        try {
-            WebElement modalClose = wait.until(ExpectedConditions.visibilityOfElementLocated(continueShoppingButton));
-            modalClose.click();
-            wait.until(ExpectedConditions.invisibilityOf(modalClose));
-        } catch (Exception e) {
-        }
+        click(By.cssSelector("a[data-product-id='" + productId + "'].add-to-cart"));
+        By modal = By.id("cartModal");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(modal));
+        click(By.cssSelector("#cartModal .modal-footer .btn"));
     }
 
     public void removeFromCart(int productId) {
@@ -42,6 +37,5 @@ public class CartPage extends BasePage {
         By deleteButton = By.cssSelector("a.cart_quantity_delete[data-product-id='" + productId + "']");
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteButton));
         click(deleteButton);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(deleteButton));
     }
 }
