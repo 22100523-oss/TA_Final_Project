@@ -2,17 +2,19 @@
 
 //ჯგუფის წევრები
 - გიორგი ჭეიშვილი
-- ლევანი შონია
 
-//Test Case Distribution
 
-//გიორგი ჭეიშვილი
 UI ტესტები:
 1. Login test
 2. Logout test
 3. Register test
 4. Add to cart
 5. Remove from cart
+6. Search product
+7. View product details
+8. Contact form
+9. Subscription
+10. Checkout flow
 
 //API Tests:
 1. Get user
@@ -20,19 +22,8 @@ UI ტესტები:
 3. Update user
 4. Delete user
 5. List users
-
-//ლევანი შონია
-UI ტესტები:
-1. Search product
-2. View product details
-3. Contact form
-4. Subscription
-5. Checkout flow
-
-//API ტესტები:
-1. Get products
-2. Create product
-3. Update product
-4. Delete product
-5. Authentication
-
+6. Get products
+7. Create product
+8. Update product
+9. Delete product
+10. Authentication
