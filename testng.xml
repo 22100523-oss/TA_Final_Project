@@ -1,8 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="SmokeSuite">
-    <test name="SmokeTest">
-        <classes>
-            <class name="ui_tests.SmokeTest"/>
-        </classes>
+<suite name="AutomationExerciseSuite" parallel="tests" thread-count="2">
+
+    <test name="UI Tests">
+        <packages>
+            <package name="tests.ui"/>
+        </packages>
     </test>
+
+    <test name="API Tests">
+        <packages>
+            <package name="tests.api"/>
+        </packages>
+    </test>
+
 </suite>
